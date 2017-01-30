@@ -8,7 +8,7 @@ const INITIAL_STATE = {
   email: '',
   password: '',
   user: null,
-  error: '',
+  error: false,
   loading: false,
   validation: {}
 };
@@ -20,8 +20,7 @@ export default (state = INITIAL_STATE, action) => {
     case PASSWORD_CHANGED:
       return {...state, password: action.payload};
     case USER_LOGIN:
-      console.log()
-      return {  ...state, INITIAL_STATE };
+      return {  ...state, error: true };
     default:
       return { ...state, INITIAL_STATE };
   }

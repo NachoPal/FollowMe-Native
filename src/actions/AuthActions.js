@@ -1,5 +1,4 @@
-import axios from 'axios';
-import { URL_STAGING, API_VERSION, APIcall } from '../initializers/conts'
+import { APIcall } from '../initializers/conts'
 import { toJson } from '../helpers/methods'
 
 import {
@@ -31,7 +30,7 @@ export const loginUser = ({email, password}) => {
      password: password
     })
     .then( response => {
-      validate(response.data)
+      validate(response.data);
       console.log(toJson(response.data));
     })
     .catch( error => {

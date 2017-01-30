@@ -4,15 +4,27 @@ import { Card, Divider, Button, Container } from 'react-native-material-ui';
 import { Input, Spinner } from './common';
 import { connect } from 'react-redux'
 import { emailChanged, passwordChanged, loginUser } from '../actions'
+import t from 'tcomb-form-native'
+import { UserLogin, UserLoginOptions } from '../initializers/formModels'
+import { checkFormFields, createFormFieldsActions } from '../helpers/methods'
 
 
 class AuthView extends Component {
 
+  onChange(){
+    if (this.props.error){
+      //checkFormFields(UserLoginOptions, this)
+    }
+  }
+
   onButtonPress(){
+    const value = this.refs.form.getValue();
+
     const {email, password} = this.props;
 
     this.props.loginUser({email, password});
   }
+
   onEmailChange(text){
     this.props.emailChanged(text);
   }
@@ -21,10 +33,23 @@ class AuthView extends Component {
     this.props.passwordChanged(text);
   }
 
+  componentWillMount() {
+    this.Form = t.form.Form;
+
+    this.options = createFormFieldsActions(UserLoginOptions,
+                                          {email: this.onEmailChange.bind(this),
+                                          password: this.onPasswordChange.bind(this)},
+                                          this);
+  }
+
+
   render(){
+    const Form = this.Form;
+    const options = this.options;
+
     return(
       <View style={{flex: 1, justifyContent: 'center'}}>
-        <Input
+        {/*<Input
           label="Email"
           placeholder="user@domain.com"
           onChangeText={this.onEmailChange.bind(this)}
@@ -36,6 +61,13 @@ class AuthView extends Component {
           placeholder="password"
           onChangeText={this.onPasswordChange.bind(this)}
           value={this.props.password}
+        />*/}
+        <Form
+          ref="form"
+          type={UserLogin}
+          options={options}
+          value={{email: this.props.email, password: this.props.password}}
+          onChange={this.onChange.bind(this)}
         />
         <Button raised primary text="Log in" onPress={this.onButtonPress.bind(this)}/>
       </View>
