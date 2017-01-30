@@ -11,18 +11,10 @@ import { checkFormFields, createFormFieldsActions } from '../helpers/methods'
 
 class AuthView extends Component {
 
-  onChange(){
-    if (this.props.error){
-      //checkFormFields(UserLoginOptions, this)
-    }
-  }
-
   onButtonPress(){
     const value = this.refs.form.getValue();
-
     const {email, password} = this.props;
-
-    this.props.loginUser({email, password});
+    this.props.loginUser({email, password}, value);
   }
 
   onEmailChange(text){
@@ -67,7 +59,7 @@ class AuthView extends Component {
           type={UserLogin}
           options={options}
           value={{email: this.props.email, password: this.props.password}}
-          onChange={this.onChange.bind(this)}
+          //onChange={this.onChange.bind(this)}
         />
         <Button raised primary text="Log in" onPress={this.onButtonPress.bind(this)}/>
       </View>
