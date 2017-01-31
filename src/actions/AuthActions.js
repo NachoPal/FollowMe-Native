@@ -17,7 +17,6 @@ export const emailChanged = (text) => {
 };
 
 export const passwordChanged = (text) => {
-  //console.log(text);
   return {
     type: PASSWORD_CHANGED,
     payload: text
@@ -25,7 +24,7 @@ export const passwordChanged = (text) => {
 };
 
 export const loginUser = ({email, password}, value) => {
-
+  console.log(value);
   return (dispatch) => {
     if (value){
       console.log('Exito');

@@ -7,7 +7,7 @@ const Email = t.refinement(t.String, (email) => {
 });
 
 const Password = t.refinement(t.String, (password) => {
-  return (password.length > 6 && password.length < 20)
+  return (password.length >= 6 && password.length <= 20)
 });
 
 export const UserLogin = t.struct({

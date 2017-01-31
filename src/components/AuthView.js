@@ -11,6 +11,14 @@ import { checkFormFields, createFormFieldsActions } from '../helpers/methods'
 
 class AuthView extends Component {
 
+  onChange(){
+    if (this.props.error) {
+      Object.keys(this.refs.form.refs.input.refs).map((field) => {
+        this.refs.form.getComponent(field).validate();
+      });
+    }
+  }
+
   onButtonPress(){
     const value = this.refs.form.getValue();
     const {email, password} = this.props;
@@ -30,36 +38,21 @@ class AuthView extends Component {
 
     this.options = createFormFieldsActions(UserLoginOptions,
                                           {email: this.onEmailChange.bind(this),
-                                          password: this.onPasswordChange.bind(this)},
-                                          this);
+                                          password: this.onPasswordChange.bind(this)});
   }
 
 
   render(){
     const Form = this.Form;
     const options = this.options;
-
     return(
       <View style={{flex: 1, justifyContent: 'center'}}>
-        {/*<Input
-          label="Email"
-          placeholder="user@domain.com"
-          onChangeText={this.onEmailChange.bind(this)}
-          value={this.props.email}
-        />
-        <Input
-          secureTextEntry
-          label="Password"
-          placeholder="password"
-          onChangeText={this.onPasswordChange.bind(this)}
-          value={this.props.password}
-        />*/}
         <Form
           ref="form"
           type={UserLogin}
           options={options}
           value={{email: this.props.email, password: this.props.password}}
-          //onChange={this.onChange.bind(this)}
+          onChange={this.onChange.bind(this)}
         />
         <Button raised primary text="Log in" onPress={this.onButtonPress.bind(this)}/>
       </View>
