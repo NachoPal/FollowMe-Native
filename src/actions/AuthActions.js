@@ -4,12 +4,13 @@ import { toJson } from '../helpers/methods'
 import {
   EMAIL_CHANGED,
   PASSWORD_CHANGED,
-  USER_LOGIN_ERROR,
-  USER_LOGIN_SUCCESS
-} from './types';
+  LOGIN_VALIDATION_ERROR,
+  LOGIN_VALIDATION_SUCCESS,
+  LOGIN_AUTH_ERROR,
+  LOGIN_AUTH_SUCCESS
+} from '../initializers/types';
 
 export const emailChanged = (text) => {
-  //console.log(text);
   return {
     type: EMAIL_CHANGED,
     payload: text
@@ -24,25 +25,34 @@ export const passwordChanged = (text) => {
 };
 
 export const loginUser = ({email, password}, value) => {
-  console.log(value);
   return (dispatch) => {
     if (value){
-      console.log('Exito');
-      dispatch({type: USER_LOGIN_SUCCESS});
+      dispatch({type: LOGIN_VALIDATION_SUCCESS});
 
       APIcall.post('log-in', {
         email: email,
         password: password
       })
         .then( response => {
+          if (response.data.status == 'success'){
+            dispatch({type: LOGIN_AUTH_SUCCESS});
+          }else{
+            var message = {};
+            Object.keys(response.data.reason).map((field) => {
+                if (response.data.reason[field] != undefined){
+                  message[field] = field + ' ' + response.data.reason[field]
+                }
+              }
+            );
+            dispatch({type: LOGIN_AUTH_ERROR, payload: message});
+          }
           console.log(toJson(response.data));
         })
-        .catch( error => {
+        .catch( (error) => {
           console.log(error);
         });
     }else{
-      console.log('Fail');
-      dispatch({type: USER_LOGIN_ERROR});
+      dispatch({type: LOGIN_VALIDATION_ERROR});
     }
   };
 };

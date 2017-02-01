@@ -4,7 +4,7 @@ export function toJson(object) {
   return JSON.stringify(object, undefined, 4)
 }
 
-export function createFormFieldsActions (fieldsObject, actionCreators) {
+export function addFormFieldsActionCreators (fieldsObject, actionCreators) {
 
   Object.keys(actionCreators).map((field) => {
     fieldsObject.fields[field].onChange = (event) => {

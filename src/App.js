@@ -6,6 +6,8 @@ import reducers from './reducers';
 import AuthView from './components/AuthView';
 import { COLOR, ThemeProvider } from 'react-native-material-ui';
 import ReduxThunk from 'redux-thunk';
+import Promise from 'redux-promise';
+import createLogger from 'redux-logger'
 
 
 const uiTheme = {
@@ -28,7 +30,8 @@ export default class App extends Component {
   };
 
   render() {
-    const store = createStore(reducers, {}, applyMiddleware(ReduxThunk));
+    const logger = createLogger();
+    const store = createStore(reducers, {}, applyMiddleware(ReduxThunk, Promise, logger));
 
     return(
       <Provider store={store}>
