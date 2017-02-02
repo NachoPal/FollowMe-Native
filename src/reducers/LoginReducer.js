@@ -23,11 +23,13 @@ export default (state = INITIAL_STATE, action) => {
     case EMAIL_CHANGED:
       return { ...state,
         email: action.payload,
+        auth_error: false
       };
 
     case PASSWORD_CHANGED:
       return {...state,
         password: action.payload,
+        auth_error: false
       };
 
     case LOGIN_VALIDATION_ERROR:

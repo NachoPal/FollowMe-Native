@@ -3,7 +3,7 @@ import { Provider } from 'react-redux'
 import { View, Text } from 'react-native';
 import { createStore, applyMiddleware } from 'redux';
 import reducers from './reducers';
-import AuthView from './components/AuthView';
+import LoginView from './components/LoginView';
 import { COLOR, ThemeProvider } from 'react-native-material-ui';
 import ReduxThunk from 'redux-thunk';
 import Promise from 'redux-promise';
@@ -36,7 +36,7 @@ export default class App extends Component {
     return(
       <Provider store={store}>
         <ThemeProvider uiTheme={uiTheme}>
-          <AuthView/>
+          <LoginView/>
         </ThemeProvider>
       </Provider>
     );

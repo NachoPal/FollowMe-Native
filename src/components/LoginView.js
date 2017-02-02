@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Text, View, Modal } from 'react-native';
-import { Card, Divider, Button, Container, Dialog, DialogDefaultActions } from 'react-native-material-ui';
+import { Text, View, Modal, Alert, KeyboardAvoidingView, Keyboard } from 'react-native';
+import { Card, Divider, Button, Container } from 'react-native-material-ui';
 import { Input, Spinner } from './common';
 import { connect } from 'react-redux'
 import { emailChanged, passwordChanged, loginUser } from '../actions'
@@ -9,7 +9,7 @@ import { UserLogin, UserLoginOptions } from '../initializers/formModels'
 import { addFormFieldsActionCreators } from '../helpers/methods'
 
 
-class AuthView extends Component {
+class LoginView extends Component {
 
   onChange(){
     if (this.props.tried) {
@@ -22,6 +22,7 @@ class AuthView extends Component {
   onButtonPress(){
     const value = this.refs.form.getValue();
     const {email, password} = this.props;
+    Keyboard.dismiss();
     this.props.loginUser({email, password}, value);
   }
 
@@ -51,24 +52,10 @@ class AuthView extends Component {
 
   renderAuthFailureDialog() {
     if (!this.props.loading && this.props.auth_error){
-
-      return(
-        <Dialog>
-          <Dialog.Title><Text>Fallo en la Autentificación</Text></Dialog.Title>
-          <Dialog.Content>
-            <Text>
-              {this.props.auth_error_message}
-            </Text>
-          </Dialog.Content>
-          <Dialog.Actions>
-            <DialogDefaultActions
-              actions={['Dismiss', 'Keep']}
-              onActionPress={(type) => {type == 'Dissmiss' ? alert('Perra') : alert('Zorra')}}
-            />
-          </Dialog.Actions>
-        </Dialog>
-      );
-    }
+      Alert.alert(
+        'Error de Autentificación',
+        this.props.auth_error_message,
+      )}
   }
 
 
@@ -77,38 +64,34 @@ class AuthView extends Component {
     const options = this.options;
 
     return(
-      <View>
-        <View style={{justifyContent: 'center'}}>
-          <Form
-            ref="form"
-            type={UserLogin}
-            options={options}
-            value={{email: this.props.email, password: this.props.password}}
-            onChange={this.onChange.bind(this)}
-          />
-          {this.renderButton()}
-        </View>
-
-        <View>
-          {this.renderAuthFailureDialog()}
-        </View>
-      </View>
+      <KeyboardAvoidingView behavior={'padding'} style={{flex: 1, justifyContent: 'center'}}>
+        <Form
+          style={{flex:2}}
+          ref="form"
+          type={UserLogin}
+          options={options}
+          value={{email: this.props.email, password: this.props.password}}
+          onChange={this.onChange.bind(this)}
+        />
+        {this.renderButton()}
+        {this.renderAuthFailureDialog()}
+      </KeyboardAvoidingView>
     );
   }
 }
 
 const mapsStateToProps = state => {
   return {
-    email: state.auth.email,
-    password: state.auth.password,
-    auth_error_message: state.auth.auth_error_message,
-    auth_error: state.auth.auth_error,
-    loading: state.auth.loading,
-    tried: state.auth.tried
+    email: state.login.email,
+    password: state.login.password,
+    auth_error_message: state.login.auth_error_message,
+    auth_error: state.login.auth_error,
+    loading: state.login.loading,
+    tried: state.login.tried
   };
 };
 
 export default connect(
   mapsStateToProps,
   {emailChanged, passwordChanged, loginUser})
-  (AuthView);
+  (LoginView);
