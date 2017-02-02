@@ -3,13 +3,18 @@ import { Text, View, Modal, Alert, KeyboardAvoidingView, Keyboard } from 'react-
 import { Card, Divider, Button, Container } from 'react-native-material-ui';
 import { Input, Spinner } from './common';
 import { connect } from 'react-redux'
-import { emailChanged, passwordChanged, loginUser } from '../actions'
+import {
+  emailChanged,
+  passwordChanged,
+  loginUser,
+  push,
+} from '../actions'
 import t from 'tcomb-form-native'
 import { UserLogin, UserLoginOptions } from '../initializers/formModels'
 import { addFormFieldsActionCreators } from '../helpers/methods'
 
 
-class LoginView extends Component {
+class LogInScene extends Component {
 
   onChange(){
     if (this.props.tried) {
@@ -32,6 +37,10 @@ class LoginView extends Component {
 
   onPasswordChange(text){
     this.props.passwordChanged(text);
+  }
+
+  onSceneChange(key){
+    this.props.push(key);
   }
 
   componentWillMount() {
@@ -64,18 +73,31 @@ class LoginView extends Component {
     const options = this.options;
 
     return(
-      <KeyboardAvoidingView behavior={'padding'} style={{flex: 1, justifyContent: 'center'}}>
-        <Form
-          style={{flex:2}}
-          ref="form"
-          type={UserLogin}
-          options={options}
-          value={{email: this.props.email, password: this.props.password}}
-          onChange={this.onChange.bind(this)}
-        />
-        {this.renderButton()}
-        {this.renderAuthFailureDialog()}
-      </KeyboardAvoidingView>
+      <View style={{flex: 1, justifyContent: 'space-between'}}>
+        <View style={{flex: 1}}/>
+        <KeyboardAvoidingView behavior={'padding'} style={{flex: 1}}>
+          <Form
+            ref="form"
+            type={UserLogin}
+            options={options}
+            value={{email: this.props.email, password: this.props.password}}
+            onChange={this.onChange.bind(this)}
+          />
+          {this.renderButton()}
+          {this.renderAuthFailureDialog()}
+        </KeyboardAvoidingView>
+
+        <View style={{flex: 1, justifyContent: 'flex-end'}}>
+          <Text>
+            Todavía no estás registrado?
+          </Text>
+          <Text onPress={() => this.onSceneChange({key: 'sign_up'})}>
+            Registrate!
+          </Text>
+        </View>
+      </View>
+
+
     );
   }
 }
@@ -87,11 +109,13 @@ const mapsStateToProps = state => {
     auth_error_message: state.login.auth_error_message,
     auth_error: state.login.auth_error,
     loading: state.login.loading,
-    tried: state.login.tried
+    tried: state.login.tried,
+
+    push: state.nav.push,
   };
 };
 
 export default connect(
   mapsStateToProps,
-  {emailChanged, passwordChanged, loginUser})
-  (LoginView);
+  {emailChanged, passwordChanged, loginUser, push})
+  (LogInScene);
