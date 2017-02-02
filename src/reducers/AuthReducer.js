@@ -13,8 +13,7 @@ const INITIAL_STATE = {
   user: null,
   tried: false,
   auth_error: false,
-  email_error_message: '',
-  password_error_message: '',
+  auth_error_message: '',
   loading: false,
 };
 
@@ -44,26 +43,7 @@ export default (state = INITIAL_STATE, action) => {
       };
 
     case LOGIN_AUTH_ERROR:
-      var nextState = { ...state,
-        auth_error: true,
-        email_error_message: action.payload,
-        password_error_message: action.payload,
-        loading: false
-      };
-
-      if (action.payload.hasOwnProperty('email')){
-        return { ...nextState, email_error_message: action.payload}
-      }
-      if (action.payload.hasOwnProperty('password')){
-        return { ...nextState, password_error_message: action.payload}
-      }
-
-      return { ...state,
-        auth_error: true,
-        email_error_message: action.payload,
-        password_error_message: action.payload,
-        loading: false
-      };
+      return { ...state, loading: false, auth_error: true, auth_error_message: action.payload};
 
     case LOGIN_AUTH_SUCCESS:
       return { ...state,

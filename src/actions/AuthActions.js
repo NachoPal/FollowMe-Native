@@ -37,10 +37,10 @@ export const loginUser = ({email, password}, value) => {
           if (response.data.status == 'success'){
             dispatch({type: LOGIN_AUTH_SUCCESS});
           }else{
-            var message = {};
+            var message = '';
             Object.keys(response.data.reason).map((field) => {
                 if (response.data.reason[field] != undefined){
-                  message[field] = field + ' ' + response.data.reason[field]
+                  message = field + ' ' + response.data.reason[field]
                 }
               }
             );
