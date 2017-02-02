@@ -74,8 +74,8 @@ class LogInScene extends Component {
 
     return(
       <View style={{flex: 1, justifyContent: 'space-between'}}>
-        <View style={{flex: 1}}/>
-        <KeyboardAvoidingView behavior={'padding'} style={{flex: 1}}>
+        <View style={{flex: 1, backgroundColor: 'rgba(0,0,0,0)'}}/>
+        <KeyboardAvoidingView behavior={'padding'} style={{flex: 6, justifyContent: 'center'}}>
           <Form
             ref="form"
             type={UserLogin}
@@ -114,6 +114,7 @@ const mapsStateToProps = state => {
     push: state.nav.push,
   };
 };
+
 
 export default connect(
   mapsStateToProps,

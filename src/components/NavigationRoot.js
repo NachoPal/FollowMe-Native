@@ -39,4 +39,3 @@ const mapsStateToProps = state => {
 };
 
 export default connect(mapsStateToProps)(NavigationRoot);
-//export default NavigationRoot;

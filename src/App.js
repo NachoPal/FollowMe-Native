@@ -36,9 +36,7 @@ export default class App extends Component {
     return(
       <Provider store={store}>
         <ThemeProvider uiTheme={uiTheme}>
-          {/*<NavigationRoot navigationState={store.getState()}/>*/}
           <NavigationRoot/>
-          {/*<LoginScene/>*/}
         </ThemeProvider>
       </Provider>
     );
