@@ -13,7 +13,7 @@ const INITIAL_STATE = {
   user: null,
   tried: false,
   auth_error: false,
-  auth_error_message: '',
+  auth_error_message: {},
   loading: false,
 };
 

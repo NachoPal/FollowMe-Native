@@ -9,13 +9,13 @@ import {
 } from '../initializers/types';
 
 const INITIAL_STATE = {
-  userName: '',
+  name: '',
   email: '',
   password: '',
   user: null,
   tried: false,
   auth_error: false,
-  auth_error_message: '',
+  auth_error_message: {},
   loading: false,
 };
 
@@ -24,7 +24,7 @@ export default (state = INITIAL_STATE, action) => {
 
     case SIGNUP_USER_NAME_CHANGED:
       return { ...state,
-        userName: action.payload,
+        name: action.payload,
         auth_error: false
       };
 

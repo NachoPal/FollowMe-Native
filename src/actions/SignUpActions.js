@@ -32,13 +32,13 @@ export const signupUserNameChanged = (text) => {
   };
 };
 
-export const signupUser = ({userName, email, password}, value) => {
+export const signupUser = ({name, email, password}, value) => {
   return (dispatch) => {
     if (value){
       dispatch({type: SIGNUP_VALIDATION_SUCCESS});
 
       APIcall.post('sign-up', {
-        name: userName,
+        name: name,
         email: email,
         password: password
       })
@@ -46,14 +46,8 @@ export const signupUser = ({userName, email, password}, value) => {
           if (response.status == 201){
             dispatch({type: SIGNUP_AUTH_SUCCESS});
           }else{
-            var message = [];
-            Object.keys(response.data.reason).map((field) => {
-                if (response.data.reason[field] != undefined){
-                  message.push(field + ' ' + response.data.reason[field]);
-                }
-              }
-            );
-            dispatch({type: SIGNUP_AUTH_ERROR, payload: message});
+            var errorMessage = response.data.reason;
+            dispatch({type: SIGNUP_AUTH_ERROR, payload: errorMessage});
           }
           console.log(toJson(response.data));
         })

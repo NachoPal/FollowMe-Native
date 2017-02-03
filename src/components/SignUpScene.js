@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Text, View, Modal, Alert, KeyboardAvoidingView, Keyboard } from 'react-native';
-import { Card, Divider, Button, Container } from 'react-native-material-ui';
+import { Text, View, Modal, KeyboardAvoidingView, Keyboard } from 'react-native';
+import { Button } from 'react-native-material-ui';
 import { Input, Spinner } from './common';
 import { connect } from 'react-redux'
 import {
@@ -12,7 +12,7 @@ import {
 } from '../actions'
 import t from 'tcomb-form-native'
 import { UserSignup, UserSignupOptions } from '../initializers/formModels'
-import { addFormFieldsActionCreators } from '../helpers/methods'
+import { addFormFieldsActionCreators, updateFormErrorMessages } from '../helpers/methods'
 
 
 class SignUpScene extends Component {
@@ -27,9 +27,9 @@ class SignUpScene extends Component {
 
   onButtonPress(){
     const value = this.refs.form.getValue();
-    const {userName, email, password} = this.props;
+    const {name, email, password} = this.props;
     Keyboard.dismiss();
-    this.props.signupUser({userName, email, password}, value);
+    this.props.signupUser({name, email, password}, value);
   }
 
   onUserNameChange(text){
@@ -52,10 +52,14 @@ class SignUpScene extends Component {
     this.Form = t.form.Form;
     this.options = addFormFieldsActionCreators(UserSignupOptions,
       {
-        userName: this.onUserNameChange.bind(this),
+        name: this.onUserNameChange.bind(this),
         email: this.onEmailChange.bind(this),
         password: this.onPasswordChange.bind(this)
       });
+  }
+
+  componentWillUpdate(nextState) {
+    updateFormErrorMessages(nextState, UserSignupOptions, t, this)
   }
 
   renderButton() {
@@ -67,34 +71,24 @@ class SignUpScene extends Component {
     );
   };
 
-  renderAuthFailureDialog() {
-    if (!this.props.loading && this.props.auth_error){
-      Alert.alert(
-        'Error de Autentificación',
-        this.props.auth_error_message.reduce((final, initial) => {
-            return final + '\n' + initial
-        }, '')
-      )}
-  }
-
-
   render(){
     const Form = this.Form;
     const options = this.options;
 
     return(
       <View style={{flex: 1, justifyContent: 'space-between'}}>
+
         <View style={{flex: 1, backgroundColor: 'rgba(0,0,0,0)'}}/>
+
         <KeyboardAvoidingView behavior={'padding'} style={{flex: 6, justifyContent: 'center'}}>
           <Form
             ref="form"
             type={UserSignup}
             options={options}
-            value={{userName: this.props.userName, email: this.props.email, password: this.props.password}}
+            value={{name: this.props.name, email: this.props.email, password: this.props.password}}
             onChange={this.onChange.bind(this)}
           />
           {this.renderButton()}
-          {this.renderAuthFailureDialog()}
         </KeyboardAvoidingView>
 
         <View style={{flex: 1, justifyContent: 'flex-end', backgroundColor: 'rgba(0,0,0,0)'}}>
@@ -105,16 +99,15 @@ class SignUpScene extends Component {
             Accede!
           </Text>
         </View>
+
       </View>
-
-
     );
   }
 }
 
 const mapsStateToProps = state => {
   return {
-    userName: state.signup.userName,
+    name: state.signup.name,
     email: state.signup.email,
     password: state.signup.password,
     auth_error_message: state.signup.auth_error_message,

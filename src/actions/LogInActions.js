@@ -37,14 +37,8 @@ export const loginUser = ({email, password}, value) => {
           if (response.data.status == 'success'){
             dispatch({type: LOGIN_AUTH_SUCCESS});
           }else{
-            var message = [];
-            Object.keys(response.data.reason).map((field) => {
-                if (response.data.reason[field] != undefined){
-                  message.push(field + ' ' + response.data.reason[field]);
-                }
-              }
-            );
-            dispatch({type: LOGIN_AUTH_ERROR, payload: message});
+            var errorMessage = response.data.reason;
+            dispatch({type: LOGIN_AUTH_ERROR, payload: errorMessage});
           }
           console.log(toJson(response.data));
         })

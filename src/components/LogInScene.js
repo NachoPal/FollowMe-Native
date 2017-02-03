@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Text, View, Modal, Alert, KeyboardAvoidingView, Keyboard } from 'react-native';
-import { Card, Divider, Button, Container } from 'react-native-material-ui';
+import { Text, View, Modal, KeyboardAvoidingView, Keyboard } from 'react-native';
+import { Button } from 'react-native-material-ui';
 import { Input, Spinner } from './common';
 import { connect } from 'react-redux'
 import {
@@ -11,7 +11,8 @@ import {
 } from '../actions'
 import t from 'tcomb-form-native'
 import { UserLogin, UserLoginOptions } from '../initializers/formModels'
-import { addFormFieldsActionCreators } from '../helpers/methods'
+import { addFormFieldsActionCreators, updateFormErrorMessages } from '../helpers/methods'
+import objectAssignDeep from 'object-assign-deep';
 
 
 class LogInScene extends Component {
@@ -29,6 +30,7 @@ class LogInScene extends Component {
     const {email, password} = this.props;
     Keyboard.dismiss();
     this.props.loginUser({email, password}, value);
+    console.log(this.refs.form.getComponent('email'));
   }
 
   onEmailChange(text){
@@ -45,9 +47,17 @@ class LogInScene extends Component {
 
   componentWillMount() {
     this.Form = t.form.Form;
-    this.options = addFormFieldsActionCreators(UserLoginOptions,
-                                          {email: this.onEmailChange.bind(this),
-                                          password: this.onPasswordChange.bind(this)});
+    this.options = objectAssignDeep(
+      {},
+      addFormFieldsActionCreators(
+        UserLoginOptions,
+        {email: this.onEmailChange.bind(this), password: this.onPasswordChange.bind(this)}
+        )
+    );
+  }
+
+  componentWillUpdate(nextState) {
+    updateFormErrorMessages(nextState, UserLoginOptions, t, this)
   }
 
   renderButton() {
@@ -59,24 +69,15 @@ class LogInScene extends Component {
     );
   };
 
-  renderAuthFailureDialog() {
-    if (!this.props.loading && this.props.auth_error){
-      Alert.alert(
-        'Error de Autentificación',
-        this.props.auth_error_message.reduce((final, initial) => {
-          return final + '\n' + initial
-        }, '')
-      )}
-  }
-
-
   render(){
     const Form = this.Form;
     const options = this.options;
 
     return(
       <View style={{flex: 1, justifyContent: 'space-between'}}>
+
         <View style={{flex: 1, backgroundColor: 'rgba(0,0,0,0)'}}/>
+
         <KeyboardAvoidingView behavior={'padding'} style={{flex: 6, justifyContent: 'center'}}>
           <Form
             ref="form"
@@ -86,7 +87,6 @@ class LogInScene extends Component {
             onChange={this.onChange.bind(this)}
           />
           {this.renderButton()}
-          {this.renderAuthFailureDialog()}
         </KeyboardAvoidingView>
 
         <View style={{flex: 1, justifyContent: 'flex-end'}}>
@@ -97,9 +97,8 @@ class LogInScene extends Component {
             Registrate!
           </Text>
         </View>
+
       </View>
-
-
     );
   }
 }

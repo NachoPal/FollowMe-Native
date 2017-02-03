@@ -19,7 +19,7 @@ export const UserLogin = t.struct({
 });
 
 export const UserSignup = t.struct({
-  userName: UserName,
+  name: UserName,
   email: Email,
   password: Password
 });
@@ -28,7 +28,7 @@ export const UserLoginOptions = {
   auto: 'placeholders',
   fields: {
     email: {
-      error: 'Email no invalido',
+      error: 'Email no valido'
     },
     password: {
       error: 'Password de 6 a 20 caracteres de longitud',
@@ -40,7 +40,7 @@ export const UserLoginOptions = {
 export const UserSignupOptions = {
   auto: 'placeholders',
   fields: {
-    userName: {
+    name: {
       error: 'Nombre de usuario menor de 20 caracteres',
     },
     email: {
