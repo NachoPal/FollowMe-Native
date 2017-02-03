@@ -1,7 +1,7 @@
 import t from 'tcomb-form-native';
 
 const UserName = t.refinement(t.String, (password) => {
-  return (password.length <= 20)
+  return (password.length >= 1 && password.length <= 20)
 });
 
 const Email = t.refinement(t.String, (email) => {
