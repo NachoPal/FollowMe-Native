@@ -4,9 +4,9 @@ import { Card, Divider, Button, Container } from 'react-native-material-ui';
 import { Input, Spinner } from './common';
 import { connect } from 'react-redux'
 import {
-  userNameChanged,
-  emailChanged,
-  passwordChanged,
+  signupUserNameChanged,
+  signupEmailChanged,
+  signupPasswordChanged,
   signupUser,
   push,
 } from '../actions'
@@ -33,15 +33,15 @@ class SignUpScene extends Component {
   }
 
   onUserNameChange(text){
-    this.props.userNameChanged(text);
+    this.props.signupUserNameChanged(text);
   }
 
   onEmailChange(text){
-    this.props.emailChanged(text);
+    this.props.signupEmailChanged(text);
   }
 
   onPasswordChange(text){
-    this.props.passwordChanged(text);
+    this.props.signupPasswordChanged(text);
   }
 
   onSceneChange(key){
@@ -52,7 +52,7 @@ class SignUpScene extends Component {
     this.Form = t.form.Form;
     this.options = addFormFieldsActionCreators(UserSignupOptions,
       {
-        user_name: this.onUserNameChange.bind(this),
+        userName: this.onUserNameChange.bind(this),
         email: this.onEmailChange.bind(this),
         password: this.onPasswordChange.bind(this)
       });
@@ -71,7 +71,9 @@ class SignUpScene extends Component {
     if (!this.props.loading && this.props.auth_error){
       Alert.alert(
         'Error de Autentificación',
-        this.props.auth_error_message,
+        this.props.auth_error_message.reduce((final, initial) => {
+            return final + '\n' + initial
+        }, '')
       )}
   }
 
@@ -88,7 +90,7 @@ class SignUpScene extends Component {
             ref="form"
             type={UserSignup}
             options={options}
-            value={{email: this.props.email, password: this.props.password}}
+            value={{userName: this.props.userName, email: this.props.email, password: this.props.password}}
             onChange={this.onChange.bind(this)}
           />
           {this.renderButton()}
@@ -112,12 +114,13 @@ class SignUpScene extends Component {
 
 const mapsStateToProps = state => {
   return {
-    email: state.login.email,
-    password: state.login.password,
-    auth_error_message: state.login.auth_error_message,
-    auth_error: state.login.auth_error,
-    loading: state.login.loading,
-    tried: state.login.tried,
+    userName: state.signup.userName,
+    email: state.signup.email,
+    password: state.signup.password,
+    auth_error_message: state.signup.auth_error_message,
+    auth_error: state.signup.auth_error,
+    loading: state.signup.loading,
+    tried: state.signup.tried,
 
     push: state.nav.push,
   };
@@ -126,5 +129,5 @@ const mapsStateToProps = state => {
 
 export default connect(
   mapsStateToProps,
-  {userNameChanged, emailChanged, passwordChanged, signupUser, push})
+  {signupUserNameChanged, signupEmailChanged, signupPasswordChanged, signupUser, push})
   (SignUpScene);

@@ -4,8 +4,8 @@ import { Card, Divider, Button, Container } from 'react-native-material-ui';
 import { Input, Spinner } from './common';
 import { connect } from 'react-redux'
 import {
-  emailChanged,
-  passwordChanged,
+  loginEmailChanged,
+  loginPasswordChanged,
   loginUser,
   push,
 } from '../actions'
@@ -32,11 +32,11 @@ class LogInScene extends Component {
   }
 
   onEmailChange(text){
-    this.props.emailChanged(text);
+    this.props.loginEmailChanged(text);
   }
 
   onPasswordChange(text){
-    this.props.passwordChanged(text);
+    this.props.loginPasswordChanged(text);
   }
 
   onSceneChange(key){
@@ -63,7 +63,9 @@ class LogInScene extends Component {
     if (!this.props.loading && this.props.auth_error){
       Alert.alert(
         'Error de Autentificación',
-        this.props.auth_error_message,
+        this.props.auth_error_message.reduce((final, initial) => {
+          return final + '\n' + initial
+        }, '')
       )}
   }
 
@@ -118,5 +120,5 @@ const mapsStateToProps = state => {
 
 export default connect(
   mapsStateToProps,
-  {emailChanged, passwordChanged, loginUser, push})
+  {loginEmailChanged, loginPasswordChanged, loginUser, push})
   (LogInScene);

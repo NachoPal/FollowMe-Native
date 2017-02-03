@@ -2,46 +2,58 @@ import { APIcall } from '../initializers/conts'
 import { toJson } from '../helpers/methods'
 
 import {
-  USER_NAME_CHANGED,
+  SIGNUP_EMAIL_CHANGED,
+  SIGNUP_PASSWORD_CHANGED,
+  SIGNUP_USER_NAME_CHANGED,
   SIGNUP_VALIDATION_ERROR,
   SIGNUP_VALIDATION_SUCCESS,
   SIGNUP_AUTH_ERROR,
   SIGNUP_AUTH_SUCCESS
 } from '../initializers/types';
 
-
-
-export const userNameChanged = (text) => {
+export const signupEmailChanged = (text) => {
   return {
-    type: USER_NAME_CHANGED,
+    type: SIGNUP_EMAIL_CHANGED,
+    payload: text
+  };
+};
+
+export const signupPasswordChanged = (text) => {
+  return {
+    type: SIGNUP_PASSWORD_CHANGED,
+    payload: text
+  };
+};
+
+export const signupUserNameChanged = (text) => {
+  return {
+    type: SIGNUP_USER_NAME_CHANGED,
     payload: text
   };
 };
 
 export const signupUser = ({userName, email, password}, value) => {
-  return {
-    type: SIGNUP_VALIDATION_ERROR
-  };
-  /*return (dispatch) => {
+  return (dispatch) => {
     if (value){
-      dispatch({type: LOGIN_VALIDATION_SUCCESS});
+      dispatch({type: SIGNUP_VALIDATION_SUCCESS});
 
-      APIcall.post('log-in', {
+      APIcall.post('sign-up', {
+        name: userName,
         email: email,
         password: password
       })
         .then( response => {
-          if (response.data.status == 'success'){
-            dispatch({type: LOGIN_AUTH_SUCCESS});
+          if (response.status == 201){
+            dispatch({type: SIGNUP_AUTH_SUCCESS});
           }else{
-            var message = '';
+            var message = [];
             Object.keys(response.data.reason).map((field) => {
                 if (response.data.reason[field] != undefined){
-                  message = field + ' ' + response.data.reason[field]
+                  message.push(field + ' ' + response.data.reason[field]);
                 }
               }
             );
-            dispatch({type: LOGIN_AUTH_ERROR, payload: message});
+            dispatch({type: SIGNUP_AUTH_ERROR, payload: message});
           }
           console.log(toJson(response.data));
         })
@@ -49,7 +61,7 @@ export const signupUser = ({userName, email, password}, value) => {
           console.log(error);
         });
     }else{
-      dispatch({type: LOGIN_VALIDATION_ERROR});
+      dispatch({type: SIGNUP_VALIDATION_ERROR});
     }
-  };*/
+  };
 };

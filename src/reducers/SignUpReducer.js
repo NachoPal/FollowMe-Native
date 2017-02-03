@@ -1,7 +1,7 @@
 import {
-  USER_NAME_CHANGED,
-  EMAIL_CHANGED,
-  PASSWORD_CHANGED,
+  SIGNUP_USER_NAME_CHANGED,
+  SIGNUP_EMAIL_CHANGED,
+  SIGNUP_PASSWORD_CHANGED,
   SIGNUP_VALIDATION_ERROR,
   SIGNUP_VALIDATION_SUCCESS,
   SIGNUP_AUTH_ERROR,
@@ -9,6 +9,7 @@ import {
 } from '../initializers/types';
 
 const INITIAL_STATE = {
+  userName: '',
   email: '',
   password: '',
   user: null,
@@ -21,19 +22,19 @@ const INITIAL_STATE = {
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
 
-    case USER_NAME_CHANGED:
+    case SIGNUP_USER_NAME_CHANGED:
+      return { ...state,
+        userName: action.payload,
+        auth_error: false
+      };
+
+    case SIGNUP_EMAIL_CHANGED:
       return { ...state,
         email: action.payload,
         auth_error: false
       };
 
-    case EMAIL_CHANGED:
-      return { ...state,
-        email: action.payload,
-        auth_error: false
-      };
-
-    case PASSWORD_CHANGED:
+    case SIGNUP_PASSWORD_CHANGED:
       return {...state,
         password: action.payload,
         auth_error: false
@@ -52,7 +53,11 @@ export default (state = INITIAL_STATE, action) => {
       };
 
     case SIGNUP_AUTH_ERROR:
-      return { ...state, loading: false, auth_error: true, auth_error_message: action.payload};
+      return { ...state,
+        loading: false,
+        auth_error: true,
+        auth_error_message: action.payload
+    };
 
     case SIGNUP_AUTH_SUCCESS:
       return { ...state,
