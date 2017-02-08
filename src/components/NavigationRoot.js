@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { NavigationExperimental } from 'react-native';
 import LogInScene from './LogInScene';
 import SignUpScene from './SignUpScene';
-import TripsScene from './TripsScene';
+import TripListScene from './TripListScene';
 import { connect } from 'react-redux'
 
 const { CardStack: NavigationCardStack } = NavigationExperimental;
@@ -17,7 +17,7 @@ export class NavigationRoot extends Component {
       case 'sign_up':
         return <SignUpScene/>;
       case 'trips':
-        return <TripsScene/>;
+        return <TripListScene/>;
       default:
         return <LogInScene/>;
     }

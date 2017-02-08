@@ -59,7 +59,7 @@ class LogInScene extends Component {
   componentWillUpdate(nextState) {
     updateFormErrorMessages(nextState, UserLoginOptions, t, this);
     console.log(nextState);
-    if (!nextState.loading && !nextState.auth_error && nextState.tried && nextState.user != null) {
+    if (!nextState.auth_error && nextState.tried && nextState.user != null) {
       console.log(nextState.user);
       this.props.push({key: 'trips'})
     }

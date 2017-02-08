@@ -1,5 +1,6 @@
 import { APIcall } from '../initializers/conts'
 import { toJson } from '../helpers/methods'
+import { AsyncStorage } from 'react-native'
 
 import {
   LOGIN_EMAIL_CHANGED,
@@ -35,9 +36,16 @@ export const loginUser = ({email, password}, value) => {
       })
         .then( response => {
           if (response.data.status == 'success'){
+            const user = Object.assign(response.data.user, {auth_token: response.data.auth_token});
+
+            try {
+              AsyncStorage.setItem('currentUser', user);
+            } catch (error) {
+              // Error saving data
+            }
             dispatch({
               type: LOGIN_AUTH_SUCCESS,
-              payload: Object.assign(response.data.user, {auth_token: response.data.auth_token})
+              payload: user
             });
           }else{
             var errorMessage = response.data.reason;

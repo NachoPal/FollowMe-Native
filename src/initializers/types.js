@@ -18,3 +18,7 @@ export const SIGNUP_AUTH_SUCCESS = 'signup_auth_success';
 // NAVIGATION
 export const PUSH_ROUTE = 'push_route';
 export const POP_ROUTE = 'pop_route';
+
+//TRIP
+export const TRIP_INDEX_SUCCESS = 'trip_index_success';
+

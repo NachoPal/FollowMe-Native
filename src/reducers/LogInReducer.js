@@ -54,7 +54,6 @@ export default (state = INITIAL_STATE, action) => {
     case LOGIN_AUTH_SUCCESS:
       return { ...state,
         auth_error: false,
-        loading: false,
         user: action.payload
       };
 
