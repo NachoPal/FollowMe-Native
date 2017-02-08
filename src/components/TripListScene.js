@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, Modal, KeyboardAvoidingView, Keyboard } from 'react-native';
+import { Text, View, Modal, KeyboardAvoidingView, Keyboard, ListView } from 'react-native';
 import { connect } from 'react-redux'
 import {
   fetchTripIndex,
@@ -17,24 +17,40 @@ class TripListScene extends Component {
   // }
 
   componentWillMount() {
-    this.props.fetchTripIndex()
+    this.props.fetchTripIndex();
+
+    this.createDataSource(this.props);
+
+  }
+  componentWillReceiveProps(nextProps) {
+    // nextProps are the next set of props that this component
+    // will be rendered with
+    // this.props is still the old set of props
+    //this.props.employeesFetch();
+    this.createDataSource(nextProps);
   }
 
-  //createDataSource({ employees }) {
-    //const ds = new ListView.DataSource({
-      //rowHasChanged: (r1, r2) => r1 !== r2
-    //});
+  createDataSource({ trips }) {
+    const ds = new ListView.DataSource({
+      rowHasChanged: (r1, r2) => r1 !== r2
+    });
 
-    //this.dataSource = ds.cloneWithRows(employees);
-  //}
+    this.dataSource = ds.cloneWithRows(trips);
+  }
+
+  renderRow(employee) {
+    return <TripRow trip={employee} />;
+  }
+
+
 
   render() {
     return(
-      // <ListView
-      //   dataSource={this.state.dataSource}
-      //   renderRow={(rowData) => <Text>{rowData}</Text>}
-      // />
-      <View><Text>Hola</Text></View>
+      <ListView
+        enableEmptySections
+        dataSource={this.dataSource}
+        renderRow={this.renderRow}
+      />
     );
   }
 }
@@ -46,7 +62,4 @@ const mapsStateToProps = state => {
   };
 };
 
-export default connect(
-  mapsStateToProps,
-  {fetchTripIndex})
-  (TripListScene);
+export default connect(mapsStateToProps, {fetchTripIndex})(TripListScene);

@@ -1,6 +1,7 @@
 import { APIcall } from '../initializers/conts'
 import { toJson } from '../helpers/methods'
 import { AsyncStorage } from 'react-native'
+//import {  JsonApiDataStore } from 'jsonapi-datastore'
 
 import {
   TRIP_INDEX_SUCCESS
@@ -8,7 +9,6 @@ import {
 
 export const fetchTripIndex = () => {
   return (dispatch) => {
-    console.log('entra');
     AsyncStorage.getItem('currentUser', (err, result) => {
       console.log(result);
 
@@ -19,6 +19,10 @@ export const fetchTripIndex = () => {
       APIcall.get( `/user/${userId}/trips`)
         .then( response => {
           console.log(toJson(response.data));
+          var store = JsonApiDataStore();
+          store.sync(response.data);
+          var trips = store.findAll('trip');
+          console.log(toJson(trips));
             dispatch({type: TRIP_INDEX_SUCCESS, payload: response.data}); //RECOGER BIEN LOS DATOS AQUI!!!
           }
         )
