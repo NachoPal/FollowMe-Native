@@ -7,7 +7,7 @@ import {
   loginEmailChanged,
   loginPasswordChanged,
   loginUser,
-  push,
+  push
 } from '../actions'
 import t from 'tcomb-form-native'
 import { UserLogin, UserLoginOptions } from '../initializers/formModels'

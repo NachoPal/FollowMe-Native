@@ -8,8 +8,8 @@ import {
 } from '../initializers/types';
 
 const INITIAL_STATE = {
-  email: '',
-  password: '',
+  email: 'ignacio.palacios.santos@gmail.com',
+  password: 'jodetep500',
   user: null,
   tried: false,
   auth_error: false,

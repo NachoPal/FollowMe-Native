@@ -1,5 +1,10 @@
 import React, { Component } from 'react';
 import { Text, View, Modal, KeyboardAvoidingView, Keyboard } from 'react-native';
+import { connect } from 'react-redux'
+import {
+  fetchTripIndex,
+  push
+} from '../actions'
 
 class TripListScene extends Component {
 
@@ -12,7 +17,7 @@ class TripListScene extends Component {
   // }
 
   componentWillMount() {
-    this.props.fethcListIndex()
+    this.props.fetchTripIndex()
   }
 
   //createDataSource({ employees }) {
@@ -25,10 +30,11 @@ class TripListScene extends Component {
 
   render() {
     return(
-      <ListView
-        dataSource={this.state.dataSource}
-        renderRow={(rowData) => <Text>{rowData}</Text>}
-      />
+      // <ListView
+      //   dataSource={this.state.dataSource}
+      //   renderRow={(rowData) => <Text>{rowData}</Text>}
+      // />
+      <View><Text>Hola</Text></View>
     );
   }
 }
@@ -42,5 +48,5 @@ const mapsStateToProps = state => {
 
 export default connect(
   mapsStateToProps,
-  {fethcListIndex})
+  {fetchTripIndex})
   (TripListScene);
