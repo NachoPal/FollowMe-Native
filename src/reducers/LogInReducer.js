@@ -55,6 +55,7 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state,
         auth_error: false,
         loading: false,
+        user: action.payload
       };
 
     default:

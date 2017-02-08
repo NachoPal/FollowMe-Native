@@ -57,7 +57,12 @@ class LogInScene extends Component {
   }
 
   componentWillUpdate(nextState) {
-    updateFormErrorMessages(nextState, UserLoginOptions, t, this)
+    updateFormErrorMessages(nextState, UserLoginOptions, t, this);
+    console.log(nextState);
+    if (!nextState.loading && !nextState.auth_error && nextState.tried && nextState.user != null) {
+      console.log(nextState.user);
+      this.props.push({key: 'trips'})
+    }
   }
 
   renderButton() {
@@ -111,6 +116,7 @@ const mapsStateToProps = state => {
     auth_error: state.login.auth_error,
     loading: state.login.loading,
     tried: state.login.tried,
+    user: state.login.user,
 
     push: state.nav.push,
   };

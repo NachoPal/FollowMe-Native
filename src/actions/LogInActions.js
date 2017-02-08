@@ -35,7 +35,10 @@ export const loginUser = ({email, password}, value) => {
       })
         .then( response => {
           if (response.data.status == 'success'){
-            dispatch({type: LOGIN_AUTH_SUCCESS});
+            dispatch({
+              type: LOGIN_AUTH_SUCCESS,
+              payload: Object.assign(response.data.user, {auth_token: response.data.auth_token})
+            });
           }else{
             var errorMessage = response.data.reason;
             dispatch({type: LOGIN_AUTH_ERROR, payload: errorMessage});
