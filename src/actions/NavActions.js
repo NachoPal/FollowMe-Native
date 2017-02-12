@@ -4,7 +4,6 @@ import {
 } from '../initializers/types';
 
 export const push = (route) => {
-  console.log(route);
   return {
     type: PUSH_ROUTE,
     payload: route,

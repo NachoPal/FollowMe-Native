@@ -49,10 +49,8 @@ export const signupUser = ({name, email, password}, value) => {
             var errorMessage = response.data.reason;
             dispatch({type: SIGNUP_AUTH_ERROR, payload: errorMessage});
           }
-          console.log(toJson(response.data));
         })
         .catch( (error) => {
-          console.log(error);
         });
     }else{
       dispatch({type: SIGNUP_VALIDATION_ERROR});

@@ -3,14 +3,15 @@ import {
 } from '../initializers/types';
 
 const INITIAL_STATE = {
-  trips: {}
+  trips: [{name: '', description: ''}],
+  loading: true
 };
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
 
     case TRIP_INDEX_SUCCESS:
-      return { ...state, trips: action.payload};
+      return { ...state, trips: action.payload, loading: false};
     default:
       return { ...state, INITIAL_STATE };
   }

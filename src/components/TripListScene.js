@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Text, View, Modal, KeyboardAvoidingView, Keyboard, ListView } from 'react-native';
 import { connect } from 'react-redux'
+import TripRow  from './TripRow'
+import { Spinner } from './common';
 import {
   fetchTripIndex,
   push
@@ -17,20 +19,15 @@ class TripListScene extends Component {
   // }
 
   componentWillMount() {
-    this.props.fetchTripIndex();
-
+    this.props.fetchTripIndex(this.props.user);
     this.createDataSource(this.props);
-
   }
+
   componentWillReceiveProps(nextProps) {
-    // nextProps are the next set of props that this component
-    // will be rendered with
-    // this.props is still the old set of props
-    //this.props.employeesFetch();
     this.createDataSource(nextProps);
   }
 
-  createDataSource({ trips }) {
+  createDataSource( { trips } ) {
     const ds = new ListView.DataSource({
       rowHasChanged: (r1, r2) => r1 !== r2
     });
@@ -38,13 +35,14 @@ class TripListScene extends Component {
     this.dataSource = ds.cloneWithRows(trips);
   }
 
-  renderRow(employee) {
-    return <TripRow trip={employee} />;
+  renderRow(trip) {
+    return <TripRow trip={trip} />;
   }
 
-
-
-  render() {
+  renderTripList() {
+    if (this.props.loading) {
+      return <Spinner size="large"/>;
+    }
     return(
       <ListView
         enableEmptySections
@@ -53,12 +51,23 @@ class TripListScene extends Component {
       />
     );
   }
+
+
+
+  render() {
+    return(
+      <View>
+        {this.renderTripList()}
+      </View>
+    );
+  }
 }
 
 const mapsStateToProps = state => {
   return {
-    email: state.trip.trips,
-
+    trips: state.trip.trips,
+    loading: state.trip.loading,
+    user: state.login.user
   };
 };
 

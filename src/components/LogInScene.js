@@ -30,7 +30,6 @@ class LogInScene extends Component {
     const {email, password} = this.props;
     Keyboard.dismiss();
     this.props.loginUser({email, password}, value);
-    console.log(this.refs.form.getComponent('email'));
   }
 
   onEmailChange(text){
@@ -58,7 +57,6 @@ class LogInScene extends Component {
 
   componentWillUpdate(nextState) {
     updateFormErrorMessages(nextState, UserLoginOptions, t, this);
-    console.log(nextState);
     if (!nextState.auth_error && nextState.tried && nextState.user != null) {
       console.log(nextState.user);
       this.props.push({key: 'trips'})

@@ -38,11 +38,8 @@ export const loginUser = ({email, password}, value) => {
           if (response.data.status == 'success'){
             const user = Object.assign(response.data.user, {auth_token: response.data.auth_token});
 
-            //try {
-              AsyncStorage.setItem('currentUser', JSON.stringify(user));
-            //} catch (error) {
-              // Error saving data
-            //}
+            //AsyncStorage.setItem('currentUser', JSON.stringify(user));
+
             dispatch({
               type: LOGIN_AUTH_SUCCESS,
               payload: user

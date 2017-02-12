@@ -10,7 +10,6 @@ const { CardStack: NavigationCardStack } = NavigationExperimental;
 export class NavigationRoot extends Component {
 
   renderScene(props) {
-    console.log(props.scene.route.key);
     switch (props.scene.route.key) {
       case 'log_in':
         return <LogInScene/>;
@@ -24,7 +23,6 @@ export class NavigationRoot extends Component {
   };
 
   render() {
-    console.log (this.props);
     return (
       <NavigationCardStack
         direction='vertical'

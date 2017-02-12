@@ -6,5 +6,4 @@ export const URL_STAGING = (__DEV__) ? 'http://api.ufollow.tk/' : 'production UR
 export const APIcall = axios.create({
                         baseURL: URL_STAGING + API_VERSION,
                         timeout: 1000,
-                        headers: {'Content-Type': 'application/vnd.api+json'}
                       });

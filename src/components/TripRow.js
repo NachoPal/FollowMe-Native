@@ -1,13 +1,14 @@
 import React, {Component} from 'react';
 import { Text, TouchableWithoutFeedback, View } from 'react-native';
 import { CardSection } from './common';
-import { Actions } from 'react-native-router-flux';
 
 class TripRow extends Component {
+
   render() {
+    const { name } = this.props.trip;
     return(
       <View>
-        <Text>Pimpoyo</Text>
+        <Text>{name}</Text>
       </View>
     );
   }
