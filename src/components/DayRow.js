@@ -2,18 +2,14 @@ import React, {Component} from 'react';
 import { Text, TouchableWithoutFeedback, View } from 'react-native';
 import { CardSection } from './common';
 
-class TripRow extends Component {
-
-  onSceneChange(key) {
-    this.props.push(key)
-  }
+class DayRow extends Component {
 
   onRowPress() {
-    this.onSceneChange({key: 'days'})
+    console.log("Funciona")
   };
 
   render() {
-    const { name } = this.props.trip;
+    //const { name } = this.props.trip;
     return(
       <TouchableWithoutFeedback onPress={this.onRowPress.bind(this)}>
         <View>
@@ -50,4 +46,4 @@ const styles = {
   }
 };
 
-export default TripRow;
+export default DayRow;

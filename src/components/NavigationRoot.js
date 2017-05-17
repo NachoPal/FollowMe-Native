@@ -3,6 +3,7 @@ import { NavigationExperimental } from 'react-native';
 import LogInScene from './LogInScene';
 import SignUpScene from './SignUpScene';
 import TripListScene from './TripListScene';
+import DayListScene from './DayListScene';
 import { connect } from 'react-redux'
 
 const { CardStack: NavigationCardStack } = NavigationExperimental;
@@ -17,6 +18,8 @@ export class NavigationRoot extends Component {
         return <SignUpScene/>;
       case 'trips':
         return <TripListScene/>;
+      case 'days':
+        return <DayListScene/>;
       default:
         return <LogInScene/>;
     }
