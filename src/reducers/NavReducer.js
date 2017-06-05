@@ -5,6 +5,7 @@ import {
   POP_ROUTE
 } from '../initializers/types';
 
+
 const INITIAL_STATE = {
   index: 0,
   routes: [{key: 'log_in'}]
