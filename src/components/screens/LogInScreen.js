@@ -1,16 +1,15 @@
 import React, { Component } from 'react';
 import { Text, View, Modal, KeyboardAvoidingView, Keyboard } from 'react-native';
 import { Button } from 'react-native-material-ui';
-import { Input, Spinner } from './common';
+import { Input, Spinner } from '../common';
 import { connect } from 'react-redux'
 import {
   loginEmailChanged,
   loginPasswordChanged,
-  loginUser,
-  push
-} from '../actions'
+  loginUser
+} from '../../actions'
 import t from 'tcomb-form-native'
-import { UserLogin, UserLoginOptions } from '../initializers/formModels'
+import { UserLogin, UserLoginOptions } from '../../initializers/formModels'
 import { addFormFieldsActionCreators, updateFormErrorMessages } from '../helpers/methods'
 import objectAssignDeep from 'object-assign-deep';
 

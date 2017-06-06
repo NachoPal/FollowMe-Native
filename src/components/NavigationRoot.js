@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+/*import React, { Component } from 'react';
 import { NavigationExperimental } from 'react-native';
 import LogInScene from './LogInScene';
 import SignUpScene from './SignUpScene';
@@ -43,3 +43,4 @@ const mapsStateToProps = state => {
 };
 
 export default connect(mapsStateToProps)(NavigationRoot);
+*/
