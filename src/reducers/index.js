@@ -1,11 +1,11 @@
 import { combineReducers } from 'redux';
 import LogInReducer from './LogInReducer';
 import SignUpReducer from './SignUpReducer';
-import NavReducer from './NavReducer';
+import NavAppReducer from './NavAppReducer';
 import TripReducer from './TripReducer';
 
 export default combineReducers({
-  nav: NavReducer,
+  nav: NavAppReducer,
   login: LogInReducer,
   signup: SignUpReducer,
   trip: TripReducer

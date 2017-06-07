@@ -3,13 +3,11 @@ import { Provider } from 'react-redux'
 import { View, Text } from 'react-native';
 import { createStore, applyMiddleware } from 'redux';
 import reducers from './reducers';
-/*import NavigationRoot from './components/NavigationRoot';*/
 import { COLOR, ThemeProvider } from 'react-native-material-ui';
 import ReduxThunk from 'redux-thunk';
 import Promise from 'redux-promise';
 import createLogger from 'redux-logger'
-import { StackNavigator } from 'react-navigation';
-import { LoginInScreen } from './components/screens';
+import AppWithNavigationState from './navigators/AppNavigator';
 
 
 
@@ -39,7 +37,7 @@ export default class App extends Component {
     return(
       <Provider store={store}>
         <ThemeProvider uiTheme={uiTheme}>
-          <LoginInScreen/>
+          <AppWithNavigationState />
         </ThemeProvider>
       </Provider>
     );
