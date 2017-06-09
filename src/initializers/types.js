@@ -5,6 +5,8 @@ export const LOGIN_VALIDATION_ERROR = 'login_validation_error';
 export const LOGIN_VALIDATION_SUCCESS = 'login_validation_success';
 export const LOGIN_AUTH_ERROR = 'login_auth_error';
 export const LOGIN_AUTH_SUCCESS = 'login_auth_success';
+export const LOGIN_TO_SIGNUP = 'login_to_signup';
+
 
 //SIGN UP
 export const SIGNUP_EMAIL_CHANGED = 'signup_email_changed';
@@ -14,10 +16,6 @@ export const SIGNUP_VALIDATION_ERROR = 'signup_validation_error';
 export const SIGNUP_VALIDATION_SUCCESS = 'signup_validation_success';
 export const SIGNUP_AUTH_ERROR = 'signup_auth_error';
 export const SIGNUP_AUTH_SUCCESS = 'signup_auth_success';
-
-// NAVIGATION
-export const PUSH_ROUTE = 'push_route';
-export const POP_ROUTE = 'pop_route';
 
 //TRIP
 export const TRIP_INDEX_SUCCESS = 'trip_index_success';

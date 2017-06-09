@@ -12,11 +12,26 @@ import {
 } from '../screens';
 
 export const AppNavigator = StackNavigator({
-  LogIn: { screen: LogInScreen },
-  SignUp: { screen: SignUpScreen },
-  TripList: { screen: TripListScreen },
-  DayList: { screen: DayListScreen },
-  Day: { screen: DayScreen },
+  LogIn: {
+    screen: LogInScreen,
+    title: 'LogIn'
+  },
+  SignUp: {
+    screen: SignUpScreen,
+    title: 'SignUp'
+  },
+  TripList: {
+    screen: TripListScreen,
+    title: 'TripList'
+  },
+  DayList: {
+    screen: DayListScreen,
+    title: 'DayList'
+  },
+  Day: {
+    screen: DayScreen,
+    title: 'Day'
+  },
 });
 
 const AppWithNavigationState = ({ dispatch, nav }) => (

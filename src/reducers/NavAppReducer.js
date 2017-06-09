@@ -2,6 +2,12 @@ import { combineReducers } from 'redux';
 import { NavigationActions } from 'react-navigation';
 import { AppNavigator } from '../navigators/AppNavigator';
 
+import {
+  LOGIN_TO_SIGNUP,
+  LOGIN_AUTH_SUCCESS,
+  SIGNUP_AUTH_SUCCESS
+} from '../initializers/types';
+
 const logInAction = AppNavigator.router.getActionForPathAndParams('LogIn');
 const signUpAction = AppNavigator.router.getActionForPathAndParams('SignUp');
 const tripListAction = AppNavigator.router.getActionForPathAndParams('TripList');
@@ -20,9 +26,9 @@ export default (state = INITIAL_STATE, action) => {
   var nextState;
 
   switch (action.type) {
-    case 'LogIn':
+    case LOGIN_TO_SIGNUP:
       nextState = AppNavigator.router.getStateForAction(
-        NavigationActions.back(),
+        NavigationActions.navigate({ routeName: 'LogIn' }),
         state
       );
       break;
@@ -32,7 +38,7 @@ export default (state = INITIAL_STATE, action) => {
         state
       );
       break;
-    case 'TripList':
+    case (LOGIN_AUTH_SUCCESS || SIGNUP_AUTH_SUCCESS):
       nextState = AppNavigator.router.getStateForAction(
         NavigationActions.navigate({ routeName: 'TripList' }),
         state

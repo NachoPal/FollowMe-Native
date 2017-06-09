@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Text, View, Modal, KeyboardAvoidingView, Keyboard } from 'react-native';
 import { Button } from 'react-native-material-ui';
-import { Input, Spinner } from './common';
+import { Input, Spinner } from '../components/common';
 import { connect } from 'react-redux'
 import {
   signupUserNameChanged,

@@ -3,6 +3,7 @@ import { toJson } from '../helpers/methods'
 import { AsyncStorage } from 'react-native'
 
 import {
+  LOGIN_TO_SIGNUP,
   LOGIN_EMAIL_CHANGED,
   LOGIN_PASSWORD_CHANGED,
   LOGIN_VALIDATION_ERROR,
@@ -10,6 +11,13 @@ import {
   LOGIN_AUTH_ERROR,
   LOGIN_AUTH_SUCCESS
 } from '../initializers/types';
+
+export const loginToSignUp = () => {
+  return {
+    type: LOGIN_TO_SIGNUP,
+    payload: ''
+  };
+};
 
 export const loginEmailChanged = (text) => {
   return {

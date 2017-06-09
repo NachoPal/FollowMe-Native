@@ -1,20 +1,25 @@
 import React, { Component } from 'react';
 import { Text, View, Modal, KeyboardAvoidingView, Keyboard } from 'react-native';
 import { Button } from 'react-native-material-ui';
-import { Input, Spinner } from '../common';
+import { Input, Spinner } from '../components/common';
 import { connect } from 'react-redux'
 import {
+  loginToSignUp,
   loginEmailChanged,
   loginPasswordChanged,
   loginUser
-} from '../../actions'
+} from '../actions'
 import t from 'tcomb-form-native'
-import { UserLogin, UserLoginOptions } from '../../initializers/formModels'
+import { UserLogin, UserLoginOptions } from '../initializers/formModels'
 import { addFormFieldsActionCreators, updateFormErrorMessages } from '../helpers/methods'
 import objectAssignDeep from 'object-assign-deep';
 
 
-class LogInScene extends Component {
+class LogInScreen extends Component {
+
+  onSignUpPress(){
+    this.props.loginToSignUp();
+  }
 
   onChange(){
     if (this.props.tried) {
@@ -24,7 +29,7 @@ class LogInScene extends Component {
     }
   }
 
-  onButtonPress(){
+  onLogInPress(){
     const value = this.refs.form.getValue();
     const {email, password} = this.props;
     Keyboard.dismiss();
@@ -39,9 +44,9 @@ class LogInScene extends Component {
     this.props.loginPasswordChanged(text);
   }
 
-  onSceneChange(key){
-    this.props.push(key);
-  }
+  // onSceneChange(key){
+  //   this.props.push(key);
+  // }
 
   componentWillMount() {
     this.Form = t.form.Form;
@@ -67,7 +72,7 @@ class LogInScene extends Component {
       return <Spinner size="large"/>;
     }
     return(
-      <Button raised primary text="Log in" onPress={this.onButtonPress.bind(this)}/>
+      <Button raised primary text="Log in" onPress={this.onLogInPress.bind(this)}/>
     );
   };
 
@@ -95,7 +100,7 @@ class LogInScene extends Component {
           <Text>
             Todavía no estás registrado?
           </Text>
-          <Text onPress={() => this.onSceneChange({key: 'sign_up'})}>
+          <Text onPress={() => this.onSignUpPress()}>
             Registrate!
           </Text>
         </View>
@@ -115,12 +120,13 @@ const mapsStateToProps = state => {
     tried: state.login.tried,
     user: state.login.user,
 
-    push: state.nav.push,
+    //push: state.nav.push,
   };
 };
 
+export default LogInScreen;
 
 export default connect(
   mapsStateToProps,
-  {loginEmailChanged, loginPasswordChanged, loginUser, push})
-  (LogInScene);
+  {loginToSignUp, loginEmailChanged, loginPasswordChanged, loginUser})
+  (LogInScreen);
